@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # rclone-smb-mount
 =======
 # rclone SMB Mount con systemd
@@ -190,4 +189,3 @@ fusermount -uz /local/mount
 ## Licenza
 
 MIT
->>>>>>> 3a37a5a (Initial commit: rclone SMB mount con systemd)
