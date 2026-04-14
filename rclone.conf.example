@@ -1,0 +1,6 @@
+[myremote]
+type = smb
+host = 192.168.1.100
+user = myuser
+port = 445
+pass = YOUR_ENCRYPTED_PASSWORD

@@ -1,0 +1,35 @@
+[Unit]
+Description=rclone SMB mount REMOTE_NAME:/remote/path -> /local/mount
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
+[Service]
+Type=notify
+ExecStartPre=/usr/bin/mkdir -p /local/mount
+ExecStart=/usr/bin/rclone mount REMOTE_NAME:/remote/path /local/mount \
+  --vfs-cache-mode full \
+  --vfs-cache-max-age 72h \
+  --vfs-cache-max-size 10G \
+  --vfs-read-chunk-size 16M \
+  --vfs-read-chunk-size-limit 256M \
+  --vfs-read-ahead 128M \
+  --buffer-size 32M \
+  --transfers 4 \
+  --low-level-retries 10 \
+  --retries 5 \
+  --timeout 30s \
+  --contimeout 15s \
+  --dir-cache-time 10m \
+  --poll-interval 1m \
+  --attr-timeout 1s \
+  --no-modtime
+ExecStop=/usr/bin/fusermount -uz /local/mount
+Restart=on-failure
+RestartSec=10
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=HOME=/home/YOUR_USER
+
+[Install]
+WantedBy=default.target
